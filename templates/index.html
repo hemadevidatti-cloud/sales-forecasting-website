@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SalesCast — Sales Forecasting</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--bg:#f4f7fb;--panel:#fff;--ink:#182338;--muted:#6e7a90;--line:#e4eaf2;--blue:#3867f4;--cyan:#27b9c7;--green:#128568;--shadow:0 12px 32px #243b6410}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink)}.layout{display:flex;min-height:100vh}.sidebar{width:245px;background:#101b33;color:#fff;padding:26px 18px;flex-shrink:0}.brand{font-size:22px;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;gap:10px}.logo{width:35px;height:35px;border-radius:11px;background:linear-gradient(135deg,#4c7bff,#24c6c8);display:grid;place-items:center;font-weight:900}.subbrand{font-size:12px;color:#9eacc7;margin:7px 0 34px 45px}.nav-label{font-size:10px;color:#8190ad;font-weight:800;letter-spacing:1.5px;margin:26px 10px 12px}.navitem{width:100%;text-align:left;border:0;background:transparent;padding:12px 13px;border-radius:11px;color:#c3cde0;font-size:14px;margin:4px 0;display:flex;gap:11px;align-items:center;cursor:pointer;font-family:inherit}.navitem:hover{background:#1c2d50;color:white}.navitem:focus-visible{outline:2px solid #7fa1ff;outline-offset:2px}.navitem.active{background:#263b66;color:white}.navitem span{font-size:17px}.side-note{margin-top:60px;background:#192746;border:1px solid #2b3c60;padding:15px;border-radius:13px;color:#aebbd2;font-size:12px;line-height:1.6}.side-note strong{display:block;color:white;font-size:13px;margin-bottom:5px}.main{flex:1;min-width:0;padding:27px 32px 45px;max-width:1600px;margin:0 auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:25px}.eyebrow{color:var(--blue);font-weight:800;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.topbar h1{font-size:28px;margin:7px 0 5px;letter-spacing:-.8px}.subtitle{color:var(--muted);font-size:14px}.top-actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer;font-size:13px;transition:.15s}.btn:hover{transform:translateY(-1px)}.btn-primary{background:var(--blue);color:white;box-shadow:0 6px 15px #3867f433}.btn-light{background:white;border:1px solid var(--line);color:var(--ink)}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:19px}.metric,.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}.metric{padding:18px 19px;min-width:0}.metric-head{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;font-weight:700}.metric-icon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#edf2ff;color:var(--blue);font-size:16px}.metric-value{font-size:25px;font-weight:800;letter-spacing:-.7px;margin:13px 0 5px}.metric-foot{font-size:11px;color:var(--muted)}.content-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);gap:18px;align-items:start}.panel{padding:21px;margin-bottom:18px}.panel-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}.panel-title h2{font-size:16px;margin:0 0 6px}.panel-title p{font-size:12px;color:var(--muted);margin:0;line-height:1.5}.pill{font-size:11px;font-weight:800;color:var(--green);background:#e6f7f0;padding:7px 10px;border-radius:30px;white-space:nowrap}.chart-wrap{height:300px;position:relative}.chart-legend{font-size:11px;color:var(--muted)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field label{display:block;font-size:12px;font-weight:750;margin-bottom:7px}.field input,.field select{width:100%;border:1px solid #dce4ef;border-radius:10px;padding:11px 12px;font:inherit;font-size:13px;background:#fbfcfe;color:var(--ink)}.field input:focus,.field select:focus{outline:2px solid #dbe5ff;border-color:var(--blue)}.field.full{grid-column:1/-1}.dropzone{border:1.5px dashed #c5d3ea;border-radius:13px;background:#f8faff;padding:17px;text-align:center;cursor:pointer}.dropzone b{font-size:13px;display:block;margin-bottom:5px}.dropzone small{color:var(--muted);font-size:11px}.dropzone input{display:none}.helper{font-size:11px;color:var(--muted);line-height:1.6;margin-top:10px}.status{font-size:12px;margin-top:12px;color:var(--muted);min-height:17px}.status.error{color:#c34242}.status.success{color:var(--green)}.fullbtn{width:100%;margin-top:15px}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:12px}th{text-align:left;color:var(--muted);font-size:10px;letter-spacing:.7px;text-transform:uppercase;padding:11px 8px;border-bottom:1px solid var(--line)}td{padding:12px 8px;border-bottom:1px solid #eff2f7}tr:last-child td{border-bottom:0}.tag{padding:5px 8px;border-radius:6px;background:#edf2ff;color:#3659bd;font-size:10px;font-weight:800}.info-list{display:grid;gap:12px}.info-row{display:flex;gap:11px;align-items:flex-start}.info-icon{width:30px;height:30px;border-radius:9px;background:#f0f4fb;display:grid;place-items:center;flex-shrink:0}.info-row strong{font-size:12px;display:block;margin:1px 0 4px}.info-row p{font-size:11px;color:var(--muted);line-height:1.5;margin:0}.footnote{font-size:11px;color:var(--muted);line-height:1.6;margin-top:10px}.spinner{display:inline-block;width:13px;height:13px;border:2px solid #ffffff70;border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:7px}@keyframes spin{to{transform:rotate(360deg)}}.hide{display:none!important}
+@media(max-width:1050px){.sidebar{width:205px}.main{padding:22px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.sidebar{display:none}.main{padding:17px}.topbar{align-items:flex-start;flex-direction:column}.topbar h1{font-size:24px}.cards{gap:10px}.metric{padding:14px}.metric-value{font-size:21px}.panel{padding:16px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.chart-wrap{height:260px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">S</div> SalesCast</div>
+  <div class="subbrand">INTELLIGENCE STUDIO</div>
+  <div class="nav-label">WORKSPACE</div>
+  <button type="button" class="navitem active" data-view="overview"><span>▦</span> Forecast overview</button>
+  <button type="button" class="navitem" data-view="analysis"><span>◷</span> Time-series analysis</button>
+  <button type="button" class="navitem" data-view="performance"><span>↗</span> Model performance</button>
+  <div class="nav-label">DATA & MODELS</div>
+  <button type="button" class="navitem" data-view="history"><span>▤</span> Historical sales</button>
+  <button type="button" class="navitem" data-view="settings"><span>⚙</span> Forecast settings</button>
+  <div class="side-note"><strong>Forecasting workspace</strong>Explore historical patterns, account for seasonal effects, and estimate future sales with a time-series model.</div>
+</aside>
+<main class="main">
+  <header class="topbar">
+    <div><div class="eyebrow">SALES INTELLIGENCE / OVERVIEW</div><h1>Sales forecasting dashboard</h1><div class="subtitle">Your sales history, translated into a smarter next step.</div></div>
+    <div class="top-actions"><button class="btn btn-light" id="downloadTemplate">↓ CSV template</button><button class="btn btn-primary" id="demoBtn">↻ Load demo data</button></div>
+  </header>
+  <section class="cards" id="overviewCards">
+    <div class="metric"><div class="metric-head">Latest actual sales <span class="metric-icon">▤</span></div><div class="metric-value" id="latestMetric">—</div><div class="metric-foot">Most recent historical period</div></div>
+    <div class="metric"><div class="metric-head">Next-period forecast <span class="metric-icon">↗</span></div><div class="metric-value" id="nextMetric">—</div><div class="metric-foot" id="nextFoot">Run a forecast to calculate</div></div>
+    <div class="metric"><div class="metric-head">Forecast total <span class="metric-icon">∑</span></div><div class="metric-value" id="totalMetric">—</div><div class="metric-foot">Across the selected horizon</div></div>
+    <div class="metric"><div class="metric-head">Validation MAE <span class="metric-icon">◎</span></div><div class="metric-value" id="maeMetric">—</div><div class="metric-foot">Lower is generally better</div></div>
+  </section>
+  <div class="content-grid" id="overviewContent">
+    <div>
+      <section class="panel">
+        <div class="panel-title"><div><h2>Actual vs. forecast sales</h2><p>Historical sales, forecast line, and uncertainty-free point estimates.</p></div><span class="pill" id="modelPill">MODEL: ARIMA</span></div>
+        <div class="chart-wrap"><canvas id="salesChart" aria-label="Actual versus forecast sales chart"></canvas></div>
+        <div class="footnote">The forecast is an estimate, not a guarantee. Use business context when making decisions.</div>
+      </section>
+      <section class="panel">
+        <div class="panel-title"><div><h2>Forecast details</h2><p>Future periods generated by the selected model.</p></div><span class="tag" id="frequencyTag">MONTHLY</span></div><button class="btn btn-light" id="exportForecast" type="button">↓ Export forecast CSV</button>
+        <div class="table-wrap"><table><thead><tr><th>Period</th><th>Forecast sales</th><th>Model</th></tr></thead><tbody id="forecastRows"><tr><td colspan="3">Run a forecast to see results.</td></tr></tbody></table></div>
+      </section>
+    </div>
+    <div>
+      <section class="panel">
+        <div class="panel-title"><div><h2>Build a forecast</h2><p>Upload your own sales history or use the included sample.</p></div></div>
+        <form id="forecastForm">
+          <div class="form-grid">
+            <div class="field"><label for="model">Forecasting model</label><select id="model" name="model"><option value="ARIMA">ARIMA — statistical time series</option><option value="Prophet">Prophet-style trend + seasonality</option></select></div>
+            <div class="field"><label for="periods">Periods ahead</label><select id="periods" name="periods"><option value="3">3 periods</option><option value="6" selected>6 periods</option><option value="12">12 periods</option><option value="24">24 periods</option></select></div>
+            <div class="field full"><label>Historical sales CSV</label><label class="dropzone" for="file"><b>＋ Choose a CSV file</b><small id="fileLabel">date, sales, and optional promotion columns</small><input type="file" id="file" name="file" accept=".csv,text/csv"></label></div>
+          </div>
+          <div class="helper">Required columns: <b>date</b>, <b>sales</b>. Optional: <b>promotion</b> (1 for promotion, 0 otherwise). For monthly data, use one date per month. At least 12 valid rows are needed.</div>
+          <button class="btn btn-primary fullbtn" id="runBtn" type="submit">✦ Generate forecast</button>
+          <div class="status" id="status">Demo data is ready. Generate a forecast to begin.</div>
+        </form>
+      </section>
+      <section class="panel">
+        <div class="panel-title"><div><h2>Sales snapshot</h2><p>This circle compares total past sales with predicted sales for your chosen future periods.</p></div><span class="tag">CIRCLE CHART</span></div>
+        <div style="height:220px;max-width:360px;margin:0 auto;position:relative"><canvas id="salesMixChart" aria-label="Doughnut chart comparing historical and forecast sales"></canvas></div>
+        <div id="mixSummary" class="footnote" style="text-align:center">Generate a forecast to compare past sales with predicted sales.</div>
+      </section>
+      <section class="panel">
+        <div class="panel-title"><div><h2>How SalesCast makes a prediction</h2><p>In simple words: it learns from your past sales and estimates what may come next.</p></div></div>
+        <div class="info-list">
+          <div class="info-row"><div class="info-icon">↗</div><div><strong>Trend — the direction</strong><p>It checks whether sales are generally going up, going down, or staying similar.</p></div></div>
+          <div class="info-row"><div class="info-icon">◷</div><div><strong>Seasonality — repeating patterns</strong><p>Sales may change in similar ways during certain months or holiday periods.</p></div></div>
+          <div class="info-row"><div class="info-icon">✦</div><div><strong>Promotions — sale events</strong><p>The website can show which historical dates had promotions. This version does not directly use promotions to change its predictions.</p></div></div>
+          <div class="info-row"><div class="info-icon">◎</div><div><strong>Prediction check</strong><p>MAE and RMSE show how far predictions were from actual sales in a test part of the history. Smaller errors are generally better.</p></div></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <section id="navView" class="hide"></section>
+  <div class="footnote">SalesCast • Retail demand lab • Explore the past, test a forecast, plan the next move.</div>
+</main>
+</div>
+<script>
+let chart = null;
+let salesMixChart = null;
+let currentData = null;
+const money = v => v == null ? "—" : new Intl.NumberFormat("en-IN",{maximumFractionDigits:0}).format(v);
+const prettyDate = s => { const d = new Date(s+"T00:00:00"); return d.toLocaleDateString("en-IN",{month:"short",year:"2-digit"}); };
+async function loadDemo(){
+  document.getElementById("status").textContent = "Loading sample data…";
+  try{
+    const res=await fetch("/api/demo"); const data=await res.json();
+    currentData=data.data;
+    document.getElementById("fileLabel").textContent="Demo data loaded (48 monthly records). You can still upload your own CSV.";
+    document.getElementById("status").className="status success";
+    document.getElementById("status").textContent="Sample retail data is ready. Generate a forecast to see results.";
+    try { drawHistorical(data.data); } catch(chartError) { console.warn("Chart could not render:", chartError); }
+  }catch(e){setStatus("Could not load demo data. Check the server and /api/demo endpoint.","error");}
+}
+function drawHistorical(rows){
+  const labels=rows.map(r=>prettyDate(r.date));
+  if(typeof Chart === "undefined"){ setStatus("Sales data loaded, but the chart library could not load. Check your internet connection and refresh.","error"); return; }
+  if(chart) chart.destroy();
+  chart=new Chart(document.getElementById("salesChart"),{type:"line",data:{labels,datasets:[{label:"Actual sales",data:rows.map(r=>r.sales),borderColor:"#3867f4",backgroundColor:"#3867f41b",fill:true,tension:.28,pointRadius:2,borderWidth:2},{label:"Promotion period",data:rows.map(r=>r.promotion? r.sales:null),borderColor:"#27b9c7",backgroundColor:"#27b9c7",pointRadius:4,showLine:false}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{labels:{usePointStyle:true,boxWidth:7,font:{size:11}}}},scales:{x:{grid:{display:false},ticks:{maxTicksLimit:9,color:"#8490a5",font:{size:10}}},y:{grid:{color:"#edf1f7"},ticks:{color:"#8490a5",font:{size:10},callback:v=>new Intl.NumberFormat("en-IN",{notation:"compact"}).format(v)}}}}});
+  document.getElementById("latestMetric").textContent=money(rows[rows.length-1].sales);
+}
+function drawSalesMix(data){
+  const canvas=document.getElementById("salesMixChart");
+  if(!canvas || typeof Chart === "undefined") return;
+  const historical=(data.history||[]).reduce((sum,row)=>sum+Number(row.sales||0),0);
+  const predicted=(data.forecast||[]).reduce((sum,row)=>sum+Number(row.forecast||0),0);
+  if(salesMixChart) salesMixChart.destroy();
+  salesMixChart=new Chart(canvas,{type:"doughnut",data:{labels:["Past sales","Predicted sales"],datasets:[{data:[historical,predicted],backgroundColor:["#3867f4","#27b9c7"],borderColor:["#ffffff","#ffffff"],borderWidth:4,hoverOffset:7}]},options:{responsive:true,maintainAspectRatio:false,cutout:"68%",plugins:{legend:{position:"bottom",labels:{usePointStyle:true,boxWidth:8,padding:18,font:{size:11}}},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${money(ctx.raw)}`}}}}});
+  document.getElementById("mixSummary").textContent=`Past sales total: ${money(historical)} • Forecast total: ${money(predicted)}. These totals cover different numbers of periods, so compare them with care.`;
+}
+function drawResults(data){
+  currentData=data;
+  drawSalesMix(data);
+  if(typeof Chart === "undefined"){ setStatus("Forecast calculated, but the chart library could not load. Check your internet connection and refresh.","error"); }
+  const hist=data.history, future=data.forecast;
+  const labels=hist.map(r=>prettyDate(r.date)).concat(future.map(r=>prettyDate(r.date)));
+  const actual=hist.map(r=>r.sales).concat(Array(future.length).fill(null));
+  const forecast=Array(hist.length-1).fill(null).concat([hist[hist.length-1].sales],future.map(r=>r.forecast));
+  if(chart) chart.destroy();
+  chart=new Chart(document.getElementById("salesChart"),{type:"line",data:{labels,datasets:[
+    {label:"Actual sales",data:actual,borderColor:"#3867f4",backgroundColor:"#3867f41a",fill:true,tension:.25,pointRadius:1.5,borderWidth:2},
+    {label:"Forecast",data:forecast,borderColor:"#27b9c7",backgroundColor:"#27b9c71a",fill:false,tension:.25,pointRadius:3,borderWidth:2,borderDash:[6,4]},
+    {label:"Promotion period",data:hist.map(r=>r.promotion?r.sales:null).concat(Array(future.length).fill(null)),borderColor:"#f0a23b",backgroundColor:"#f0a23b",pointRadius:4,showLine:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{labels:{usePointStyle:true,boxWidth:7,font:{size:11}}}},scales:{x:{grid:{display:false},ticks:{maxTicksLimit:10,color:"#8490a5",font:{size:10}}},y:{grid:{color:"#edf1f7"},ticks:{color:"#8490a5",font:{size:10},callback:v=>new Intl.NumberFormat("en-IN",{notation:"compact"}).format(v)}}}}});
+  document.getElementById("latestMetric").textContent=money(data.last_sales);
+  document.getElementById("nextMetric").textContent=money(data.next_forecast);
+  document.getElementById("totalMetric").textContent=money(data.total_forecast);
+  document.getElementById("maeMetric").textContent=money(data.mae);
+  document.getElementById("nextFoot").textContent="Next forecast period • "+prettyDate(future[0].date);
+  document.getElementById("modelPill").textContent="MODEL: "+data.model.toUpperCase();
+  document.getElementById("frequencyTag").textContent=data.frequency==="MS"?"MONTHLY":"DAILY";
+  document.getElementById("forecastRows").innerHTML=future.map(r=>`<tr><td>${prettyDate(r.date)}</td><td><b>${money(r.forecast)}</b></td><td><span class="tag">${data.model}</span></td></tr>`).join("");
+}
+function setStatus(text,kind=""){const s=document.getElementById("status");s.textContent=text;s.className="status "+kind;}
+document.getElementById("forecastForm").addEventListener("submit",async e=>{
+  e.preventDefault();const btn=document.getElementById("runBtn");btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Forecasting…';setStatus("Preparing data and fitting model…");
+  try{
+    const fd=new FormData(e.target);
+    const res=await fetch("/api/forecast",{method:"POST",body:fd});const data=await res.json();
+    if(!res.ok) throw new Error(data.error||"Forecast failed.");
+    drawResults(data);setStatus(`Forecast completed with ${data.model}. ${data.history.length} historical rows analyzed. Validation RMSE: ${money(data.rmse)}.`,"success");
+  }catch(err){setStatus(err.message,"error");}
+  finally{btn.disabled=false;btn.textContent="✦ Generate forecast";}
+});
+document.getElementById("file").addEventListener("change",e=>{document.getElementById("fileLabel").textContent=e.target.files[0]?.name||"date, sales, and optional promotion columns";});
+document.getElementById("demoBtn").addEventListener("click",loadDemo);
+document.getElementById("downloadTemplate").addEventListener("click",()=>window.location.href="/api/template.csv");
+document.getElementById("exportForecast").addEventListener("click",()=>{
+  if(!currentData || !Array.isArray(currentData.forecast)){ setStatus("Generate a forecast before exporting it.","error"); return; }
+  const csv="date,forecast,model\n"+currentData.forecast.map(r=>`${r.date},${r.forecast},${currentData.model}`).join("\n");
+  const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8;"}));
+  const a=document.createElement("a");a.href=url;a.download="salescast_forecast.csv";a.click();URL.revokeObjectURL(url);
+});
+
+// Sidebar sections are real interactive views, not decorative labels.
+let navChart = null;
+function getHistoryRows(){
+  if(currentData && Array.isArray(currentData.history)) return currentData.history;
+  if(Array.isArray(currentData)) return currentData;
+  return [];
+}
+function showNavView(view){
+  const cards=document.getElementById("overviewCards"), content=document.getElementById("overviewContent"), panel=document.getElementById("navView");
+  document.querySelectorAll(".navitem[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===view));
+  if(view==="overview") { cards.classList.remove("hide"); content.classList.remove("hide"); panel.classList.add("hide"); panel.innerHTML=""; return; }
+  cards.classList.add("hide"); content.classList.add("hide"); panel.classList.remove("hide");
+  const rows=getHistoryRows();
+  if(!rows.length && view!=="settings" && view!=="performance"){
+    panel.innerHTML=`<section class="panel"><h2>Load sales data first</h2><p class="subtitle">SalesCast needs historical records before it can analyze your sales.</p><button class="btn btn-primary" id="loadForSection">Load demo data</button></section>`;
+    document.getElementById("loadForSection").addEventListener("click",async()=>{await loadDemo(); showNavView(view);});
+    panel.scrollIntoView({behavior:"smooth",block:"start"}); return;
+  }
+  if(view==="settings"){
+    panel.innerHTML=`<section class="panel"><div class="panel-title"><div><h2>Forecast settings</h2><p>Choose how SalesCast generates future sales estimates.</p></div></div><div class="info-list"><div class="info-row"><div class="info-icon">1</div><div><strong>Forecasting model</strong><p>ARIMA is the statistical time-series model. The Prophet-style option uses a simplified trend and seasonality calculation.</p></div></div><div class="info-row"><div class="info-icon">2</div><div><strong>Periods ahead</strong><p>Choose 3, 6, 12, or 24 future periods. For monthly data, one period means one month.</p></div></div><div class="info-row"><div class="info-icon">3</div><div><strong>Historical CSV</strong><p>Your file must include date and sales columns, with at least 12 valid rows. Promotion is optional.</p></div></div></div><button class="btn btn-primary fullbtn" id="goForecastBuilder">Open forecast builder</button></section>`;
+    document.getElementById("goForecastBuilder").addEventListener("click",()=>{showNavView("overview");document.getElementById("forecastForm").scrollIntoView({behavior:"smooth",block:"center"});document.getElementById("model").focus();});
+    panel.scrollIntoView({behavior:"smooth",block:"start"}); return;
+  }
+  if(view==="history"){
+    panel.innerHTML=`<section class="panel"><div class="panel-title"><div><h2>Historical sales</h2><p>Past sales records currently loaded into the dashboard.</p></div><span class="tag">${rows.length} records</span></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Actual sales</th><th>Promotion</th></tr></thead><tbody>${rows.length?rows.map(r=>`<tr><td>${prettyDate(r.date)}</td><td><b>${money(r.sales)}</b></td><td>${r.promotion?"Yes":"No"}</td></tr>`).join(""):`<tr><td colspan="3">No historical data loaded. Return to Forecast overview and click Load demo data.</td></tr>`}</tbody></table></div></section>`;
+    panel.scrollIntoView({behavior:"smooth",block:"start"}); return;
+  }
+  if(view==="analysis"){
+    const values=rows.map(r=>Number(r.sales)).filter(Number.isFinite); const avg=values.length?values.reduce((a,b)=>a+b,0)/values.length:0; const min=values.length?Math.min(...values):0; const max=values.length?Math.max(...values):0; const change=values.length>1?values[values.length-1]-values[0]:0;
+    panel.innerHTML=`<section class="panel"><div class="panel-title"><div><h2>Time-series analysis</h2><p>Review the direction and spread of historical sales over time.</p></div><span class="tag">${values.length} data points</span></div><div class="cards" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="metric"><div class="metric-head">Average sales</div><div class="metric-value">${values.length?money(avg):"—"}</div></div><div class="metric"><div class="metric-head">Highest sales</div><div class="metric-value">${values.length?money(max):"—"}</div></div><div class="metric"><div class="metric-head">Lowest sales</div><div class="metric-value">${values.length?money(min):"—"}</div></div><div class="metric"><div class="metric-head">First-to-last change</div><div class="metric-value">${values.length>1?(change>0?"+":"")+money(change):"—"}</div></div></div><div class="chart-wrap"><canvas id="analysisChart" aria-label="Historical sales time series"></canvas></div><p class="footnote">This summary describes the loaded historical data. A rise or fall does not guarantee the same future pattern.</p></section>`;
+    if(navChart) navChart.destroy();
+    if(values.length && typeof Chart!=="undefined"){navChart=new Chart(document.getElementById("analysisChart"),{type:"line",data:{labels:rows.map(r=>prettyDate(r.date)),datasets:[{label:"Historical sales",data:values,borderColor:"#3867f4",backgroundColor:"#3867f41b",fill:true,tension:.25}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true}},scales:{x:{ticks:{maxTicksLimit:10}},y:{beginAtZero:false}}}});}
+    panel.scrollIntoView({behavior:"smooth",block:"start"}); return;
+  }
+  if(view==="performance"){
+    const result=currentData && !Array.isArray(currentData) && Array.isArray(currentData.forecast)?currentData:null;
+    panel.innerHTML=`<section class="panel"><div class="panel-title"><div><h2>Model performance</h2><p>Validation metrics help assess forecast errors on held-out historical data.</p></div><span class="tag">${result?result.model:"Awaiting forecast"}</span></div><div class="cards" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="metric"><div class="metric-head">Validation MAE</div><div class="metric-value">${result?money(result.mae):"—"}</div><div class="metric-foot">Average absolute error</div></div><div class="metric"><div class="metric-head">Validation RMSE</div><div class="metric-value">${result?money(result.rmse):"—"}</div><div class="metric-foot">Penalizes larger errors more</div></div></div><p class="footnote">Lower error is generally better when comparing models on the same dataset and validation method. Generate a forecast to calculate or refresh these metrics.</p><button class="btn btn-primary" id="goPerformanceForecast">Generate / refresh forecast</button></section>`;
+    document.getElementById("goPerformanceForecast").addEventListener("click",()=>{showNavView("overview");document.getElementById("forecastForm").scrollIntoView({behavior:"smooth",block:"center"});document.getElementById("runBtn").focus();});
+    panel.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+}
+document.querySelectorAll(".navitem[data-view]").forEach(button=>button.addEventListener("click",()=>showNavView(button.dataset.view)));
+loadDemo();
+</script>
+</body></html>
